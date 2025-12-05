@@ -1,0 +1,4 @@
+# NOTA: boto3 ya viene incluido en el runtime de Python de Lambda
+# Solo necesitas instalar dependencias adicionales si las usas
+# Este archivo puede estar vacío o contener solo dependencias personalizadas
+
