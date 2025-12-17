@@ -274,7 +274,7 @@ def filter_signal(signal: List[List[float]], fs: float) -> Tuple[List[List[float
 
 
 def normalize_signal(signal: List[List[float]]) -> Tuple[List[List[float]], Dict[str, Any]]:
-    """Etapa 3: Normalización"""
+    """Etapa 3: Normalización Min-Max"""
     try:
         num_samples = len(signal)
         num_channels = len(signal[0]) if signal else 3
@@ -291,21 +291,26 @@ def normalize_signal(signal: List[List[float]]) -> Tuple[List[List[float]], Dict
                     normalized[i][channel] = signal[i][channel] if i < len(signal) and len(signal[i]) > channel else 0
                 continue
             
-            mean = sum(channel_values) / len(channel_values)
-            variance = sum((v - mean) ** 2 for v in channel_values) / len(channel_values)
-            std_dev = variance ** 0.5 if variance > 0 else 1.0
+            # Min-Max normalization: (x - min) / (max - min)
+            min_val = min(channel_values)
+            max_val = max(channel_values)
+            range_val = max_val - min_val
+            
+            # Evitar división por cero si el canal es completamente plano
+            if range_val < 1e-10:
+                range_val = 1.0
             
             for i in range(num_samples):
                 value = signal[i][channel] if i < len(signal) and len(signal[i]) > channel else 0
                 if -1e10 < value < 1e10 and value == value:  # Check for NaN and Inf
-                    normalized[i][channel] = (value - mean) / std_dev
+                    normalized[i][channel] = (value - min_val) / range_val
                 else:
                     normalized[i][channel] = 0
         
         return normalized, {
             'status': 'OK',
             'mensaje': 'Normalización completada exitosamente',
-            'metodo': 'z-score (por canal)'
+            'metodo': 'min-max (por canal)'
         }
     except Exception as e:
         logger.error(f"Error en normalización: {str(e)}")
