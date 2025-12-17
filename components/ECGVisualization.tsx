@@ -68,7 +68,7 @@ export default function ECGVisualization({
       const max = Math.max(...channelValues)
       const range = max - min || 1
 
-      // Dibujar grid horizontal
+      // Dibujar grid horizontal con valores del eje Y
       ctx.strokeStyle = '#333'
       ctx.lineWidth = 0.5
       const gridLines = 5
@@ -78,6 +78,13 @@ export default function ECGVisualization({
         ctx.moveTo(padding, y)
         ctx.lineTo(width - padding, y)
         ctx.stroke()
+        
+        // Agregar etiquetas de valores en el eje Y
+        const value = max - (i / gridLines) * range
+        ctx.fillStyle = '#666'
+        ctx.font = '10px monospace'
+        ctx.textAlign = 'right'
+        ctx.fillText(value.toFixed(3), padding - 5, y + 3)
       }
 
       // Dibujar grid vertical
@@ -116,7 +123,7 @@ export default function ECGVisualization({
       ctx.fillStyle = colors[channel]
       ctx.font = '14px monospace'
       ctx.textAlign = 'left'
-      ctx.fillText(channelNames[channel], 10, yOffset + plotHeight / 2)
+      ctx.fillText(channelNames[channel], 10, yOffset + 15)
     }
 
     // Dibujar eje X (tiempo)
