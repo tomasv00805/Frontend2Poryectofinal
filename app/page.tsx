@@ -105,28 +105,22 @@ export default function Home() {
                 </label>
                 <div className="flex gap-2 flex-wrap">
                   <button
-                    onClick={() => loadExampleECG('mimic_19706335_48374752.csv')}
+                    onClick={() => loadExampleECG('mimic_18655303_43457096.csv')}
                     className="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg text-sm text-gray-200 transition-colors"
                   >
                     Ejemplo MIMIC 1
                   </button>
                   <button
-                    onClick={() => loadExampleECG('mimic_19648488_41531395.csv')}
+                    onClick={() => loadExampleECG('mimic_18232519_45414538.csv')}
                     className="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg text-sm text-gray-200 transition-colors"
                   >
                     Ejemplo MIMIC 2
                   </button>
                   <button
-                    onClick={() => loadExampleECG('ptbxl_20991.csv')}
+                    onClick={() => loadExampleECG('ptbxl_8048.csv')}
                     className="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg text-sm text-gray-200 transition-colors"
                   >
-                    Ejemplo PTB-XL 1
-                  </button>
-                  <button
-                    onClick={() => loadExampleECG('ptbxl_9036.csv')}
-                    className="px-4 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg text-sm text-gray-200 transition-colors"
-                  >
-                    Ejemplo PTB-XL 2
+                    Ejemplo PTB-XL
                   </button>
                 </div>
               </div>
