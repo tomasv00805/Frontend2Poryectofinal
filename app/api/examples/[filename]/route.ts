@@ -20,14 +20,17 @@ export async function GET(
       return NextResponse.json({ error: 'Nombre de archivo inválido' }, { status: 400 })
     }
 
-    // En desarrollo, leer desde el directorio del proyecto
-    // En producción, estos archivos deberían estar en /public/examples/
-    const examplePath = path.join(process.cwd(), '..', 'Proyecto final', 'data', 'raw_ecg_samples', filename)
+    // Priorizar public/examples (funciona en desarrollo y producción/Vercel)
+    const publicExamplesPath = path.join(process.cwd(), 'public', 'examples', filename)
     
-    // Si no existe, intentar desde public/examples
-    let filePath = examplePath
+    // Fallback: en desarrollo, intentar desde el directorio local del proyecto
+    const localDevPath = path.join(process.cwd(), '..', 'Proyecto final', 'data', 'raw_ecg_samples', filename)
+    
+    // Intentar primero public/examples (prioridad para producción)
+    let filePath = publicExamplesPath
     if (!fs.existsSync(filePath)) {
-      filePath = path.join(process.cwd(), 'public', 'examples', filename)
+      // Fallback a ruta local solo en desarrollo
+      filePath = localDevPath
     }
 
     if (!fs.existsSync(filePath)) {
